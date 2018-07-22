@@ -43,6 +43,8 @@ impl FetchResponseListener for LayoutImageContext {
         self.cache.notify_pending_response(self.id,
                                            FetchResponseMsg::ProcessResponseEOF(response));
     }
+
+    fn process_response_done(&mut self, _aborted: bool) {}
 }
 
 impl PreInvoke for LayoutImageContext {}
@@ -78,5 +80,5 @@ pub fn fetch_image_for_layout(url: ServoUrl,
     };
 
     // Layout image loads do not delay the document load event.
-    document.loader().fetch_async_background(request, action_sender);
+    document.loader_mut().fetch_async_background(request, action_sender);
 }
